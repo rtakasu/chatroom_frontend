@@ -22,6 +22,30 @@
   font-size: large;
 }
 
+html, body, #root, #root>div {
+  height: 100%
+}
+
+.Chat {
+  height: 100%;
+}
+
+.Messages {
+  height: 80%;
+  width: 100%;
+  overflow: scroll;
+}
+
+.message {
+  text-align: left;
+}
+
+.bottomBar {
+  width: 100%;
+  height: 20%;
+  background: grey;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

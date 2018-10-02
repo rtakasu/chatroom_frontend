@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Button, Input } from 'reactstrap';
+import { Button, Input, Footer } from 'reactstrap';
 import io from "socket.io-client";
+import Messages from './Messages';
 
 class Chat extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class Chat extends Component {
       messages: []
     }
 
-    this.socket = io('localhost:3000');
+    this.socket = io('https://chatroom-backend-express.herokuapp.com/');
 
     this.socket.on('RECEIVE_MESSAGE', function(data){
         addMessage(data);
@@ -36,19 +37,16 @@ class Chat extends Component {
     }
   }
 
-  render() {
+  render(props) {
     return (
       <div className="Chat">
-        <div>
-          {this.state.messages.map(message => {
-            return (
-              <div>{message.author}: {message.message}</div>
-            )
-          })}
+        <Messages messages={this.state.messages}/>
+        <div className='bottomBar'>
+          <Input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
+          <Input type="text" placeholder="Message" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
+          <Button onClick={this.sendMessage}> Send Message </Button>
         </div>
-        <Input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
-        <Input type="text" placeholder="Message" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
-        <Button onClick={this.sendMessage}> Send Message </Button>
+
       </div>
     );
   }
