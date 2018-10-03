@@ -6,6 +6,8 @@ import Messages from './Messages';
 import {
         Modal,
         Input,
+        Row,
+        Col,
         ModalHeader,
         ModalBody,
         ModalFooter,
@@ -66,7 +68,7 @@ class Chat extends Component {
           <NavbarBrand>Rafa's Chatroom</NavbarBrand>
           <Nav className="ml-auto">
             <NavItem>
-              <NavLink href=" " onClick={this.toggle}>{this.state.username}
+              <NavLink href="#" onClick={this.toggle}>{this.state.username}
               </NavLink>
             </NavItem>
           </Nav>
@@ -75,15 +77,23 @@ class Chat extends Component {
 
         <Messages messages={this.state.messages}/>
 
-        <div className='bottomBar'>
-          <Input
-            type="text"
-            placeholder="Message"
-            value={this.state.message}
-            onKeyPress={this.handleKeyPress}
-            onChange={ev => this.setState({message: ev.target.value})}/>
-          <Button onClick={this.sendMessage}> Send Message </Button>
-        </div>
+        <Row className='bottomBar'>
+          <Col className='bottomCol' md='11'>
+            <Input
+              className="messageInputbox"
+              type="text"
+              placeholder="Message"
+              value={this.state.message}
+              onKeyPress={this.handleKeyPress}
+              onChange={ev => this.setState({message: ev.target.value})}/>
+          </Col>
+
+          <Col className='bottomCol' md='1'>
+          <Button
+            className="sendButton"
+            onClick={this.sendMessage}> Send </Button>
+          </Col>
+        </Row>
 
         <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
           <ModalHeader toggle={this.toggle}>Login Name</ModalHeader>
