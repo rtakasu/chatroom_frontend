@@ -3,7 +3,18 @@ import logo from './logo.svg';
 import './App.css';
 import io from "socket.io-client";
 import Messages from './Messages';
-import { Modal, Input, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
+import {
+        Modal,
+        Input,
+        ModalHeader,
+        ModalBody,
+        ModalFooter,
+        Button,
+        Navbar,
+        Nav,
+        NavbarBrand,
+        NavItem,
+        NavLink } from 'reactstrap';
 
 class Chat extends Component {
   constructor(props) {
@@ -40,22 +51,37 @@ class Chat extends Component {
     this.toggle = this.toggle.bind(this);
   }
 
+
+
   toggle() {
     this.setState({
       modal: !this.state.modal
     })
   }
 
-  setName(name) {
-    console.log(name);
-  }
-
   render(props) {
     return (
       <div className="Chat">
+        <Navbar color="light" light expand="md">
+          <NavbarBrand>Rafa's Chatroom</NavbarBrand>
+          <Nav className="ml-auto">
+            <NavItem>
+              <NavLink href=" " onClick={this.toggle}>{this.state.username}
+              </NavLink>
+            </NavItem>
+          </Nav>
+
+        </Navbar>
+
         <Messages messages={this.state.messages}/>
+
         <div className='bottomBar'>
-          <Input type="text" placeholder="Message" value={this.state.message} onChange={ev => this.setState({message: ev.target.value})}/>
+          <Input
+            type="text"
+            placeholder="Message"
+            value={this.state.message}
+            onKeyPress={this.handleKeyPress}
+            onChange={ev => this.setState({message: ev.target.value})}/>
           <Button onClick={this.sendMessage}> Send Message </Button>
         </div>
 
@@ -65,7 +91,7 @@ class Chat extends Component {
             <Input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Login</Button>{' '}
+            <Button color="primary" onClick={this.toggle}>Done</Button>{' '}
           </ModalFooter>
         </Modal>
 
