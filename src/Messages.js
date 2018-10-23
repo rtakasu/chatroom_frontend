@@ -9,9 +9,16 @@ class Messages extends Component {
       <div className="Messages">
         <ListGroup flush>
           {this.props.messages.map(message => {
-            return (
-              <ListGroupItem className='message'>{message.author}: {message.message}</ListGroupItem>
-            )
+            if (message["type"] == "message") {
+              return (
+                <ListGroupItem className='message'> <b>{message.author}</b>: {message.message}</ListGroupItem>
+              )
+            } else if (message["type"] == "login") {
+              return (
+                <ListGroupItem className='message'> <b>{message.author}: Joined the Chat</b> </ListGroupItem>
+              )
+            }
+
           })}
         </ListGroup>
       </div>

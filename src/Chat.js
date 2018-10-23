@@ -35,6 +35,12 @@ class Chat extends Component {
         addMessage(data);
     });
 
+    const addUser = data => {
+      console.log(data);
+      this.setState({messages: [...this.state.messages, data]});
+      console.log(this.state.messages);
+    }
+
     const addMessage = data => {
         console.log(data);
         this.setState({messages: [...this.state.messages, data]});
@@ -44,16 +50,24 @@ class Chat extends Component {
     this.sendMessage = ev => {
       ev.preventDefault();
       this.socket.emit('SEND_MESSAGE', {
+          type: 'message',
           author: this.state.username,
           message: this.state.message
       });
       this.setState({message: ''});
     }
 
+    this.sendUserLogin = this.sendUserLogin.bind(this);
     this.toggle = this.toggle.bind(this);
   }
 
-
+  sendUserLogin() {
+    this.socket.emit('SEND_MESSAGE', {
+      type: 'login',
+      author: this.state.username
+    });
+    this.toggle()
+  }
 
   toggle() {
     this.setState({
@@ -101,7 +115,7 @@ class Chat extends Component {
             <Input type="text" placeholder="Username" value={this.state.username} onChange={ev => this.setState({username: ev.target.value})}/>
           </ModalBody>
           <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Done</Button>{' '}
+            <Button color="primary" onClick={this.sendUserLogin}>Done</Button>{' '}
           </ModalFooter>
         </Modal>
 
